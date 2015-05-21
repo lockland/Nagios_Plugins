@@ -28,13 +28,15 @@
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @version    SVN: $Id:$
  * @link       http://pear.php.net/package/Nagios_Plugin
- 
- ChangeLog
- Versão 1.0-9
- - passar todos parametros para long caso exista o long (Cleber - OpServices) 11/08/13
- - retonar array com os argumentos (Cleber - OpServices) 11/08/13
- - Adicionado metodo de verificação de argumentos requiridos (Sidney - OpServices) 21/08/13 
- - Ajuste no método de Agumentos requiridos (Cléber - OpServices) 04/09/13
+ *
+ * ChangeLog
+ * Version 1.0-9
+ * - Pass all parameter to long if the long option exist (Cleber - OpServices) 11/08/13
+ * - Fixed require parameters verification (Sidney - OpServices) 21/08/13 
+ * - Message returned in getopts was adjust for respect long and short require parameters (Cléber - OpServices) 04/09/13
+ *
+ * Version 1.0-10
+ * - Removed empty line at the end of file
  */
 
 require_once('Getopt.php');
@@ -76,7 +78,6 @@ class Nagios_Plugin
 		$this->np_version = isset($args['version']) ? $args['version'] : 0;
 		$this->np_timeout = isset($args['timeout']) ? $args['timeout'] : 15;
 		set_time_limit($this->np_timeout);
-		//$this->np_license = isset($args['license']) ? $args['license'] : "This nagios plugin is free software, and comes with ABSOLUTELY\nNO WARRANTY. It may be used, redistributed and/or modified under\nthe terms of the GNU General Public Licence (see\nhttp://www.fsf.org/licensing/licenses/gpl.txt";
 		$this->np_extra = isset($args['extra']) ? $args['extra'] : '';
 		$this->np_blurb = isset($args['blurb']) ? $args['blurb'] : '';
 		$this->np_url = isset($args['url']) ? $args['url'] : '';
@@ -180,9 +181,7 @@ class Nagios_Plugin
     			$this->nagios_exit(UNKNOWN, "Error: Console_Getopt: option requires an argument ".$par );
     		}
 
-		} // end code added by Sidney Souza
-
-
+		} 
 	}
 
 	function print_version()
@@ -289,4 +288,3 @@ class Nagios_Plugin
 }
 
 ?>
-
