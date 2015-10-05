@@ -38,7 +38,7 @@
  * Version 1.0-10
  * - Removed empty line at the end of file
  * 
- * Version 1.0.-11
+ * Version 1.0-11
  *  - Removed needless lines
  *  - The user must can set min and max to a threshold
  *  - Replace Spaces to Tabs
