@@ -79,8 +79,3 @@ class Nagios_Plugin_Threshold
 	}
 
 }
-
-
-
-
-?>
