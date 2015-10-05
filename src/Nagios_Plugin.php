@@ -133,30 +133,30 @@ class Nagios_Plugin
 
 		$params = $this->condense_arguments($params);
 
-        /**passar todos parametros para long**/        
-        $all_args = $this->np_args;
-        foreach( $all_args as $x => $y ){
-            if( $y['short'] != null ) $arrLong[$y['short']] = $y['short'];
-            if( $y['long'] != null and $y['short'] ) $arrLong[$y['short']] = $y['long'];
-            if( $y['short'] == null and $y['long'] ) $arrLong[$y['long']] = $y['long'];
-        }
-        
-        foreach($params as $k => $v ){
-     		if( $arrLong[$k] ){
-     			$params_long[$arrLong[$k]] = $v;
-     		}elseif(in_array($k, $arrLong)){
-     			$params_long[$k] = $v;
-     		}
-	    }
-	    
-        $params = $params_long;
-        /** fim **/
+		/**passar todos parametros para long**/        
+		$all_args = $this->np_args;
+		foreach( $all_args as $x => $y ){
+			if( $y['short'] != null ) $arrLong[$y['short']] = $y['short'];
+			if( $y['long'] != null and $y['short'] ) $arrLong[$y['short']] = $y['long'];
+			if( $y['short'] == null and $y['long'] ) $arrLong[$y['long']] = $y['long'];
+		}
+	        
+		foreach($params as $k => $v ){
+			if( $arrLong[$k] ){
+				$params_long[$arrLong[$k]] = $v;
+			}elseif(in_array($k, $arrLong)){
+				$params_long[$k] = $v;
+			}
+		}
+		    
+		$params = $params_long;
+		/** fim **/
         
 		if(count($params) > 0 ){
-		    foreach($params as $key => $val){
-			    $this->opts[$key] = $val != '' ? $val : true;
-			    $this->$key = $val != '' ? $val : true;
-		    }
+			foreach($params as $key => $val){
+				$this->opts[$key] = $val != '' ? $val : true;
+				$this->$key = $val != '' ? $val : true;
+			}
 		}
 
 		if(isset($this->h) || isset($this->help))
@@ -172,16 +172,16 @@ class Nagios_Plugin
 		 * The below code going to validate if the required parameter was declared
 		 */
 		foreach ( $this->np_args as $param=>$arg){
-		    if ($arg['required'] === 1 && !isset( $this->opts[ $arg['long'] ] )){
-		        if(isset($arg['long'])){
-		            $par =  "--".$arg['long'] ; 
-		        }else{
-		            $par =  "-".$arg['short'] ; 
-		        }
-    			$this->nagios_exit(UNKNOWN, "Error: Console_Getopt: option requires an argument ".$par );
-    		}
-
-		} 
+			
+			if ($arg['required'] === 1 && !isset( $this->opts[ $arg['long'] ] )){
+				if (isset($arg['long'])) {
+					$par =  "--".$arg['long'] ; 
+				} else {
+					$par =  "-".$arg['short'] ; 
+				}
+				$this->nagios_exit(UNKNOWN, "Error: Console_Getopt: option requires an argument ".$par );
+			}
+		}
 	}
 
 	function print_version()
@@ -261,9 +261,9 @@ class Nagios_Plugin
 		return array($status, implode(', ', $this->np_messages[$status]));
 	}
 
-	function set_thresholds($warning, $critical)
+	function set_thresholds($warning, $critical, $min = '', $max = '')
 	{
-		$this->np_threshold = new Nagios_Plugin_Threshold($warning, $critical);
+		$this->np_threshold = new Nagios_Plugin_Threshold($warning, $critical, $min, $max);
 	}
 
 	function check_threshold($value, $warning = false, $critical = false)
@@ -284,7 +284,4 @@ class Nagios_Plugin
 	{
 		$this->nagios_exit($status, $message);
 	}
-
 }
-
-?>
